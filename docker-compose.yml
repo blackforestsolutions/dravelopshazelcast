@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  hazelcast-member:
+    image: hazelcast/hazelcast:4.1.1
+    environment:
+      - "JAVA_OPTS=-Xmx1G -Dhazelcast.shutdownhook.policy=GRACEFUL -Dhazelcast.config=/opt/hazelcast/config_ext/hazelcast.xml"
+    network_mode: "host"
+    volumes:
+      - .:/opt/hazelcast/config_ext

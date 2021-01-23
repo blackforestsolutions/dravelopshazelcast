@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config
+           http://www.hazelcast.com/schema/config/hazelcast-config-4.2.xsd">
+
+    <!--
+        MAP-CONFIG
+        max-size-policy: PER_NODE: Maximum number of map entries in each cluster member. This is the default policy.
+        eviction-policy: Eviction policy to be applied when the size of map grows larger than the value specified by the
+                         size element described below. -> LFU: Least Frequently Used.
+    -->
+    <map name="journey-map">
+        <time-to-live-seconds>1</time-to-live-seconds>
+        <eviction eviction-policy="LRU" max-size-policy="PER_NODE"/>
+    </map>
+
+    <!--
+       USER-CODE-DEPLOYMENT -> allows the client to load datamodel into hazelcast-cluster
+       class-cache-mode: Controls the local caching behavior for the classes loaded from remote members
+                         (classes loaded from clients are always cached).
+                         -> ETERNAL: Cache the loaded classes locally. This is the default value and suitable when you
+                         load long-living objects, such as domain objects stored in a map.
+       provider-mode:    Controls which classes are served to other cluster members.
+                         -> LOCAL_AND_CACHED_CLASSES: Serve classes loaded from both local classpath and from other
+                         members. This is the default value.
+       provider-filter:  Filter to constrain members that can be used for a class loading request when a class is not
+                         available locally. The value is in the format "HAS_ATTRIBUTE:foo". When it is set to
+                         "HAS_ATTRIBUTE:foo", the class loading request is only sent to the members which have "foo"
+                         as a member attribute. Setting this to null/empty allows loading of classes from all members.
+    -->
+    <user-code-deployment enabled="true">
+        <class-cache-mode>ETERNAL</class-cache-mode>
+        <provider-mode>LOCAL_AND_CACHED_CLASSES</provider-mode>
+        <provider-filter></provider-filter>
+    </user-code-deployment>
+</hazelcast>
