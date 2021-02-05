@@ -15,6 +15,15 @@
         <eviction eviction-policy="LRU" max-size-policy="PER_NODE"/>
     </map>
 
+    <network>
+        <join>
+            <multicast enabled="false"></multicast>
+            <tcp-ip enabled="true">
+                <member>localhost:5701</member>
+            </tcp-ip>
+        </join>
+    </network>
+
     <!--
        USER-CODE-DEPLOYMENT -> allows the client to load datamodel into hazelcast-cluster
        class-cache-mode: Controls the local caching behavior for the classes loaded from remote members
