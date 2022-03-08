@@ -15,6 +15,17 @@
         <eviction eviction-policy="LRU" max-size-policy="PER_NODE"/>
     </map>
 
+    <!--
+        MAP-CONFIG
+        backup-count: number of backup copies on other cluster member
+        value-collection-type: Type of the value collection. This type should be a list as it is possible that a
+                               trip holds at the same station more than once!
+    -->
+    <multimap name="trip-stop-ids-map">
+        <backup-count>1</backup-count>
+        <value-collection-type>LIST</value-collection-type>
+    </multimap>
+
     <network>
         <join>
             <multicast enabled="false"></multicast>
